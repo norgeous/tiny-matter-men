@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import { collisionCategories, collisionMaskEverything } from '../collisonFilter';
-import EmojiText from '../objects/EmojiText';
 
 const createMatterCircle = (scene, x,y, { color, radius }) => {
   const circle = scene.add.circle(x, y, radius, color);
@@ -16,7 +15,7 @@ const createMatterRoundedRect = (scene, x,y, { color, width, height, chamfer = 0
   graphics.fillRoundedRect(-width / 2, -height / 2, width, height, chamferGfx);
   const go = scene.matter.add.gameObject(graphics, {
     shape: { type: 'rectangle', width, height },
-    chamfer: { radius: chamfer },
+    chamfer: { radius: chamferGfx },
     position: { x, y },
   });
   return go;
@@ -80,8 +79,8 @@ export default class EmojiMan {
     this.hip1 = Phaser.Physics.Matter.Matter.Constraint.create({
       bodyA: this.torso.body,
       bodyB: this.leg1.body,
-      pointA: { x: 0, y: torsoHeight/2 },
-      pointB: { x: 0, y: -legHeight/2 },
+      pointA: { x: 0, y: torsoHeight/2 + legWidth/2 },
+      pointB: { x: 0, y: -legHeight/2 + legWidth/2 },
       length: 0,
       stiffness: STIFFNESS,
     });
@@ -90,8 +89,8 @@ export default class EmojiMan {
     this.hip2 = Phaser.Physics.Matter.Matter.Constraint.create({
       bodyA: this.torso.body,
       bodyB: this.leg2.body,
-      pointA: { x: 0, y: torsoHeight/2 },
-      pointB: { x: 0, y: -legHeight/2 },
+      pointA: { x: 0, y: torsoHeight/2 + legWidth/2},
+      pointB: { x: 0, y: -legHeight/2 + legWidth/2 },
       length: 0,
       stiffness: STIFFNESS,
     });
@@ -120,7 +119,9 @@ export default class EmojiMan {
   }
 
   update() {
-    return;
+    this.arm1.setAngularVelocity(.05);
+    this.arm2.setAngularVelocity(.05);
+    // return;
     const leg1diffX = this.torso.body.position.x - this.leg1.body.position.x;
     const leg1diffY = this.torso.body.position.y - this.leg1.body.position.y;
     
