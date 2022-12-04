@@ -7,14 +7,17 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create () {
-    this.man1 = new EmojiMan(this, 400, 500, {
-      height: 500,
-      color1: 0x002222,
-      color2: 0x003333,
-      color3: 0x005555,
-      color4: 0x007777,
-      color5: 0x009999,
-    });
+    setInterval(() => {
+      this.man1 = new EmojiMan(this, 400, 500, {
+        height: 70,
+        color1: 0x002222,
+        color2: 0x003333,
+        color3: 0x005555,
+        color4: 0x007777,
+        color5: 0x009999,
+      });
+      this.man1.torso.setVelocity(30,-30)
+    }, 2_000);
     
     this.matter.world.setBounds();
     this.matter.add.mouseSpring();
@@ -22,6 +25,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
-    this.man1.update();
+    // this.man1.update();
   }
 }

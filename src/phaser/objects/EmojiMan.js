@@ -15,13 +15,13 @@ const createMatterRoundedRect = (scene, x,y, { color, width, height, chamfer = 0
   graphics.fillRoundedRect(-width / 2, -height / 2, width, height, chamferGfx);
   const go = scene.matter.add.gameObject(graphics, {
     shape: { type: 'rectangle', width, height },
-    chamfer: { radius: chamferGfx },
+    chamfer: { radius: chamfer },
     position: { x, y },
   });
   return go;
 };
 
-const STIFFNESS = 1;
+const STIFFNESS = .99;
 
 export default class EmojiMan {
   constructor(scene, x,y, { height = 80, color1, color2, color3, color4, color5 }) {
@@ -79,8 +79,8 @@ export default class EmojiMan {
     this.hip1 = Phaser.Physics.Matter.Matter.Constraint.create({
       bodyA: this.torso.body,
       bodyB: this.leg1.body,
-      pointA: { x: 0, y: torsoHeight/2 + legWidth/2 },
-      pointB: { x: 0, y: -legHeight/2 + legWidth/2 },
+      pointA: { x: 0, y: (torsoHeight/2) + (legWidth/2) + 1 },
+      pointB: { x: 0, y: -(legHeight/2) + (legWidth/2) },
       length: 0,
       stiffness: STIFFNESS,
     });
@@ -89,8 +89,8 @@ export default class EmojiMan {
     this.hip2 = Phaser.Physics.Matter.Matter.Constraint.create({
       bodyA: this.torso.body,
       bodyB: this.leg2.body,
-      pointA: { x: 0, y: torsoHeight/2 + legWidth/2},
-      pointB: { x: 0, y: -legHeight/2 + legWidth/2 },
+      pointA: { x: 0, y: (torsoHeight/2) + (legWidth/2) + 1 },
+      pointB: { x: 0, y: -(legHeight/2) + (legWidth/2) },
       length: 0,
       stiffness: STIFFNESS,
     });
@@ -119,9 +119,12 @@ export default class EmojiMan {
   }
 
   update() {
+    return;
+    // this.torso.setAngularVelocity(-this.torso.angle / (1000));
+    // this.leg1.setAngularVelocity(-this.leg1.angle / (100000));
+
     this.arm1.setAngularVelocity(.05);
     this.arm2.setAngularVelocity(.05);
-    // return;
     const leg1diffX = this.torso.body.position.x - this.leg1.body.position.x;
     const leg1diffY = this.torso.body.position.y - this.leg1.body.position.y;
     
