@@ -18,28 +18,6 @@ export default class GameScene extends Phaser.Scene {
         leg: '🦵',
       },
     });
-    this.man2 = new EmojiMan(this, 800, 500, {
-      emojis: {
-        hat: '👑',//'🧢',
-        head: '😲',
-        body: '👕',
-        hips: '🩳',
-        arm: '💪',
-        hand: '🖕',
-        leg: '🦵',
-      },
-    });
-    this.man3 = new EmojiMan(this, 1200, 500, {
-      emojis: {
-        hat: '👒',
-        head: '🤖',
-        body: '👚',
-        hips: '🩳',
-        arm: '🦾',
-        hand: '🔪',
-        leg: '🦿',
-      },
-    });
     
     this.matter.world.setBounds();
     this.matter.add.mouseSpring();
@@ -48,7 +26,5 @@ export default class GameScene extends Phaser.Scene {
 
   update() {
     this.man1.update();
-    this.man2.update();
-    this.man3.update();
   }
 }

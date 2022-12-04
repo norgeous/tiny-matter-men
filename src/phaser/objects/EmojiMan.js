@@ -1,12 +1,40 @@
 import Phaser from 'phaser';
 import EmojiText from '../objects/EmojiText';
 
+const createMatterCircle = (scene, x,y, { radius }) => {
+  const circle = scene.add.circle(x, y, radius, 0x00ffff);
+  const go = scene.matter.add.gameObject(circle, {
+    shape: { type: 'circle', radius },
+  });
+  return go;
+};
+const createMatterRoundedRect = (scene, x,y, { width, height, chamfer }) => {
+  const graphics = scene.add.graphics();
+  graphics.fillStyle(0x00ffff, 1);
+  graphics.fillRoundedRect(-width/2, -height/2, width, height, chamfer);
+  const go = scene.matter.add.gameObject(graphics, {
+    shape: { type: 'rectangle', width, height },
+    chamfer,
+    position: { x, y },
+  });
+  return go;
+};
+
 const STIFFNESS = 1;
 
 export default class EmojiMan {
-  constructor(scene, x,y, {emojis}) {
+  constructor(scene, x,y, { height = 100, emojis }) {
     this.scene = scene;
-    this.emojis = emojis;
+
+    const propotions = {
+      head: 1.5/8,
+      torso: 2.5/8,
+      arm: 3/8,
+      leg: 4/8,
+    };
+
+    const head = createMatterCircle(scene, x,y, { radius: (propotions.head * height) / 2 });
+    const torso = createMatterRoundedRect(scene, x,y, { width: propotions.head * height, height: propotions.torso * height, chamfer: 10 });
 
     this.hat   = new EmojiText(scene, x, y, { text: emojis.hat,  size: 80,  matterBodyConfig: { mass: 0, shape: { type: 'rectangle', width: 60, height: 40 } }});
     this.head  = new EmojiText(scene, x, y, { text: emojis.head, size: 80,  matterBodyConfig: { mass:0 }});
