@@ -8,15 +8,12 @@ export default class GameScene extends Phaser.Scene {
 
   create () {
     this.man1 = new EmojiMan(this, 400, 500, {
-      emojis: {
-        hat: '🎩',
-        head: '😂',
-        body: '👕',
-        hips: '🩳',
-        arm: '💪',
-        hand: '👍',
-        leg: '🦵',
-      },
+      height: 500,
+      color1: 0x002222,
+      color2: 0x003333,
+      color3: 0x005555,
+      color4: 0x007777,
+      color5: 0x009999,
     });
     
     this.matter.world.setBounds();
