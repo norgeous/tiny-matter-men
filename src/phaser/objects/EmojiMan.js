@@ -23,18 +23,19 @@ const createMatterRoundedRect = (scene, x,y, { width, height, chamfer }) => {
 const STIFFNESS = 1;
 
 export default class EmojiMan {
-  constructor(scene, x,y, { height = 100, emojis }) {
+  constructor(scene, x,y, { height = 300, emojis }) {
     this.scene = scene;
 
     const propotions = {
-      head: 1.5/8,
-      torso: 2.5/8,
-      arm: 3/8,
-      leg: 4/8,
+      head: 1.5 / 8,
+      torso: 2.5 / 8,
+      arm: 3.5 / 8,
+      leg: 4 / 8,
     };
 
     const head = createMatterCircle(scene, x,y, { radius: (propotions.head * height) / 2 });
-    const torso = createMatterRoundedRect(scene, x,y, { width: propotions.head * height, height: propotions.torso * height, chamfer: 10 });
+    const torso = createMatterRoundedRect(scene, x,y, { width: propotions.head * height, height: propotions.torso * height, chamfer: 8 });
+    const leg1 = createMatterRoundedRect(scene, x,y, { width: propotions.head * height/2, height: propotions.leg * height, chamfer: 4 });
 
     this.hat   = new EmojiText(scene, x, y, { text: emojis.hat,  size: 80,  matterBodyConfig: { mass: 0, shape: { type: 'rectangle', width: 60, height: 40 } }});
     this.head  = new EmojiText(scene, x, y, { text: emojis.head, size: 80,  matterBodyConfig: { mass:0 }});
