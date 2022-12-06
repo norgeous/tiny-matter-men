@@ -17,7 +17,8 @@ export default class GameScene extends Phaser.Scene {
         color5: 0x009999,
       });
       this.man1.torso.setVelocity(30,-30)
-    }, 2_000);
+      this.man1.torso.setAngularVelocity(1)
+    }, 20_000);
     
     this.matter.world.setBounds();
     this.matter.add.mouseSpring();
